@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const {Server} = require('socket.io')
 const http =require('http')
 const app = express()
-const port = 3000
+const port = 5000
 const server = http.createServer(app);
 require('dotenv').config()
 app.use(cors())
@@ -18,10 +18,10 @@ const io = new Server(server,{
         methods:["GET","POST"]
     }
 })
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    // Additional event handling here...
-  });
+// io.on('connection', (socket) => {
+//     console.log('A user connected');
+//     // Additional event handling here...
+//   });
 
 app.listen(port,()=>{
     console.log('app listening on port '+port)

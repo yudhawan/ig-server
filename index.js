@@ -12,12 +12,13 @@ app.use(cors())
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use('/',router)
-const io = new Server(server,{
-    cors:{
-        origin:process.env.CLIENT_URL,
-        methods:["GET","POST"]
-    }
-})
+app.get('/',(req,res)=> res.send('hii'))
+// const io = new Server(server,{
+//     cors:{
+//         origin:process.env.CLIENT_URL,
+//         methods:["GET","POST"]
+//     }
+// })
 // io.on('connection', (socket) => {
 //     console.log('A user connected');
 //     // Additional event handling here...

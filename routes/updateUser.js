@@ -8,15 +8,20 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 module.exports= async function(req,res){
-    const {data} = req.body
-    const id = data.id
-    delete data.id
-    const img = data.picture?await cloudinary.uploader.upload(data?.picture, { folder: 'instagramClone' }):''
-    if(img.url){
-        data.picture=img.url
+    try {
+        const {data} = req.body
+        const id = data.id
+        delete data.id
+        const img = data.picture?await cloudinary.uploader.upload(data?.picture, { folder: 'instagramClone' }):''
+        if(img.url){
+            data.picture=img.url
+            const post = await prisma.user.update({data:data,where:{id:id}})
+            if(post) return res.status(201).json(post)
+        }
         const post = await prisma.user.update({data:data,where:{id:id}})
         if(post) return res.status(201).json(post)
+        
+    } catch (error) {
+        console.log('error loh:')
     }
-    const post = await prisma.user.update({data:data,where:{id:id}})
-    if(post) return res.status(201).json(post)
 }
